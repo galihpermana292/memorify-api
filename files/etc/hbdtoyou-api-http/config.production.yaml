@@ -10,7 +10,7 @@ user:
   password_salt: ${user_password_salt}
   token_expiration: 168h
   token_secret_key: ${token_secret_key}
-  client_id: test
+  client_id: http://945320233773-d15fjd2rsmindi188oi2ubo5q8kkvgj2.apps.googleusercontent.com
   http:
     "LoginSocial":
       timeout: 1s
