@@ -18,6 +18,7 @@ func (s *service) CreatePayment(ctx context.Context, reqPayment payment.Payment)
 
 	// update fields
 	reqPayment.CreateTime = s.timeNow()
+	reqPayment.Date = s.timeNow()
 	reqPayment.Status = payment.StatusPending
 
 	// get pg store client using transaction

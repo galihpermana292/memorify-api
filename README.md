@@ -1,7 +1,3 @@
-# hbdtoyou
-
-hbdtoyou provides functionalities for clients (school and user) in Memorify. It is also responsible for storing school-level config that can be used to supports single-tenancy in data stores.
-
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
@@ -10,7 +6,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 #### Golang
 
-You need to have [Go v1.19.4](https://golang.org/dl/) installed on your machine. Follow the [official installation guide](https://golang.org/doc/install) to install Go. Or, follow [managing installations guide](https://go.dev/doc/manage-install) to have multiple Go versions on your machine.
+You need to have [Go v1.22.3](https://golang.org/dl/) installed on your machine. Follow the [official installation guide](https://golang.org/doc/install) to install Go. Or, follow [managing installations guide](https://go.dev/doc/manage-install) to have multiple Go versions on your machine.
 
 #### PostgreSQL
 
@@ -25,13 +21,13 @@ Currently, this service stores credentials on a secret file. For development env
 1. Once you have all the prerequisites, you can start by cloning this repository into your machine.
 
 ```sh
-$ mkdir -p $GOPATH/src/github.com/temui-sisva/
-$ cd $GOPATH/src/github.com/temui-sisva
-$ git clone https://github.com/temui-sisva/hbdtoyou.git
+$ mkdir -p $GOPATH/src/github.com/galihpermana292/
+$ cd $GOPATH/src/github.com/galihpermana292
+$ git clone https://github.com/galihpermana292/memorify-api.git
 $ cd hbdtoyou
 ```
 
-> The rest of this instructions assumes that your current working directory is on `$GOPATH/src/github.com/temui-sisva/hbdtoyou`
+> The rest of this instructions assumes that your current working directory is on `$GOPATH/src/github.com/galihpermana292/memorify-api`
 
 2. Build binaries using the `go build` command.
 
@@ -58,13 +54,12 @@ This repository is organized with the following structure
 ```
 hbdtoyou
 |-- cmd                         # Contains executables codes
-|   |-- hbdtoyou-api-grpc         # gRPC server
 |   |-- hbdtoyou-api-http         # HTTP server
 |-- files
 |   |-- etc                     # Contains config files
-|   |   |-- hbdtoyou-api-grpc         
-|   |   |-- hbdtoyou-api-http   
-|-- internal                    # Application service packages      
+|   |   |-- hbdtoyou-api-http
+|-- internal                    # Application service packages
+|-- pkg                         # Contains helper library
 ```
 
 ## Contributing
@@ -74,8 +69,9 @@ hbdtoyou
 Application service packages should be developed in the `internal` directory, as those logic should not be used/imported by external repositories.
 
 Application service packages are made using the domain-driven design concept. Some articles to read:
-* https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
-* https://medium.easyread.co/golang-clean-archithecture-efd6d7c43047
+
+- https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+- https://medium.easyread.co/golang-clean-archithecture-efd6d7c43047
 
 Application service package's naming should be self-explanatory about its purpose, so that other developers would not misinterpret the package.
 

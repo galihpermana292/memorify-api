@@ -37,6 +37,7 @@ const (
 			u.type as user_type,
 			u.quota as user_quota,
 			p.content_id,
+			c.template_id,
 			t.label as template_label,
 			t.name as template_name,
 			p.amount,

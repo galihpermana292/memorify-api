@@ -380,11 +380,19 @@ func (s *server) start() int {
 		}
 	}
 
+	// endpoint checker
+	appMux.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, "Hello world! @memorify")
+	})
+
 	// handle prometheus pull endpoint
 	// rootMux.Handle("/metrics", promhttp.Handler())
 
 	// assign multiplexer as server handler
 	s.srv.Handler = rootMux
+
+	// use middlewares to app mux only
+	appMux.Use(corsMiddleware)
 
 	// serve using graceful mechanism
 	address := fmt.Sprintf(":%d", s.config.Server.Port)
@@ -395,4 +403,18 @@ func (s *server) start() int {
 	}
 
 	return CodeSuccess
+}
+
+func corsMiddleware(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Add("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+		w.Header().Add("Access-Control-Allow-Credentials", "true")
+		w.Header().Add("Access-Control-Allow-Methods", "POST, HEAD, PATCH, OPTIONS, GET, PUT, DELETE")
+		if r.Method == "OPTIONS" {
+			w.WriteHeader(http.StatusNoContent)
+			return
+		}
+		h.ServeHTTP(w, r)
+	})
 }
