@@ -31,7 +31,7 @@ const (
 		SELECT
 			u.id,
 			u.fullname,
-			u.username,
+			COALESCE(u.username, '') AS username,
 			u.email,
 			u.type,
 			u.quota,
