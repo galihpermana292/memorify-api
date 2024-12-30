@@ -49,31 +49,6 @@ func (h *contentsHandler) handleGetContents(w http.ResponseWriter, r *http.Reque
 		}
 		ctx = contextlib.SetSource(ctx, source)
 
-		// get user ID
-		reqUserID, err := httplib.GetUserIDFromHeader(r)
-		if err != nil {
-			statusCode = http.StatusBadRequest
-			errChan <- errInvalidUserID
-			return
-		}
-		ctx = contextlib.SetUserID(ctx, reqUserID)
-
-		// get token from header
-		token, err := httplib.GetBearerTokenFromHeader(r)
-		if err != nil {
-			statusCode = http.StatusBadRequest
-			errChan <- errInvalidToken
-			return
-		}
-
-		// check access token
-		err = checkAccessToken(ctx, h.auth, token, reqUserID, "handleGetContents")
-		if err != nil {
-			statusCode = http.StatusUnauthorized
-			errChan <- err
-			return
-		}
-
 		var filter content.GetContentsFilter
 		filter, err = h.parseHandleGetContentsQuery(r)
 		if err != nil {

@@ -49,31 +49,6 @@ func (h *templatesHandler) handleGetTemplates(w http.ResponseWriter, r *http.Req
 		}
 		ctx = contextlib.SetSource(ctx, source)
 
-		// get user ID
-		reqUserID, err := httplib.GetUserIDFromHeader(r)
-		if err != nil {
-			statusCode = http.StatusBadRequest
-			errChan <- errInvalidUserID
-			return
-		}
-		ctx = contextlib.SetUserID(ctx, reqUserID)
-
-		// get token from header
-		token, err := httplib.GetBearerTokenFromHeader(r)
-		if err != nil {
-			statusCode = http.StatusBadRequest
-			errChan <- errInvalidToken
-			return
-		}
-
-		// check access token
-		err = checkAccessToken(ctx, h.auth, token, reqUserID, "handleGetTemplates")
-		if err != nil {
-			statusCode = http.StatusUnauthorized
-			errChan <- err
-			return
-		}
-
 		var filter template.GetTemplatesFilter
 		filter, err = h.parseHandleGetTemplatesQuery(r)
 		if err != nil {

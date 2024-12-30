@@ -63,6 +63,7 @@ func (s *service) LoginSocial(ctx context.Context, tokenEmail string) (string, a
 		reqUser := auth.User{
 			Fullname: payload.Claims["name"].(string),
 			Email:    email,
+			Type:     auth.TypeFree,
 		}
 
 		id, err := pgStoreClient.CreateUser(ctx, reqUser)
