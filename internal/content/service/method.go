@@ -36,6 +36,10 @@ func (s *service) CreateContent(ctx context.Context, reqContent content.Content)
 		user.Quota--
 		user.UpdateTime = s.timeNow()
 
+		if user.Quota == 0 {
+			user.Type = auth.TypeFree
+		}
+
 		err = s.user.UpdateUser(ctx, user)
 		if err != nil {
 			return "", err
