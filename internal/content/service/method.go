@@ -26,13 +26,15 @@ func (s *service) CreateContent(ctx context.Context, reqContent content.Content)
 	}
 
 	fmt.Println("test 2", err)
-
+	
 	if currentTemplate.Label == template.LabelPremium {
+		fmt.Println("test 2", reqContent)
+		fmt.Println("test 2 uid", reqContent.UserID)
 		user, err := s.user.GetUserByID(ctx, reqContent.UserID)
+		fmt.Println("test 3", err)
 		if err != nil {
 			return "", err
 		}
-		fmt.Println("test 3", err)
 
 		if user.Type == auth.TypeFree || user.Quota == 0 {
 			return "", content.ErrInvalidContentAccess
