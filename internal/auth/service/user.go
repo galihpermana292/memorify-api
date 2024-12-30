@@ -57,47 +57,48 @@ func (s *service) LoginSocial(ctx context.Context, tokenEmail string) (string, a
 
 	// find user by email
 	current, err := pgStoreClient.GetUserAuth(ctx, paramsGetUserAuth)
-	if err != nil {
-		return "", auth.TokenData{}, nil
-	}
 
-	// if user not empty will be generate token
-	if current.ID != "" {
-		tokenData := auth.TokenData{
-			UserID:   current.ID,
-			Fullname: current.Fullname,
-			Email:    current.Email,
-			Quota:    current.Quota,
-			Type:     current.Type,
+	// if user empty will be create new user
+	if err == auth.ErrDataNotFound {
+		reqUser := auth.User{
+			Fullname: payload.Claims["name"].(string),
+			Email:    email,
 		}
+
+		id, err := pgStoreClient.CreateUser(ctx, reqUser)
+		if err != nil {
+			return "", auth.TokenData{}, nil
+		}
+
+		// generate token
+		tokenData := auth.TokenData{
+			UserID:   id,
+			Fullname: reqUser.Fullname,
+			Email:    reqUser.Email,
+			Quota:    0,
+			Type:     auth.TypeFree,
+		}
+
 		token, err := s.generateToken(tokenData)
 		if err != nil {
 			return "", auth.TokenData{}, err
 		}
 
 		return token, tokenData, nil
-	}
 
-	reqUser := auth.User{
-		Fullname: payload.Claims["name"].(string),
-		Email:    email,
 	}
-
-	// if user empty will be create new user
-	id, err := pgStoreClient.CreateUser(ctx, reqUser)
 	if err != nil {
-		return "", auth.TokenData{}, nil
+		return "", auth.TokenData{}, err
 	}
 
-	// generate token
+	// if user not empty will be generate token
 	tokenData := auth.TokenData{
-		UserID:   id,
-		Fullname: reqUser.Fullname,
-		Email:    reqUser.Email,
-		Quota:    0,
-		Type:     auth.TypeFree,
+		UserID:   current.ID,
+		Fullname: current.Fullname,
+		Email:    current.Email,
+		Quota:    current.Quota,
+		Type:     current.Type,
 	}
-
 	token, err := s.generateToken(tokenData)
 	if err != nil {
 		return "", auth.TokenData{}, err

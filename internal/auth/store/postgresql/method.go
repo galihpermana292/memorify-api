@@ -57,9 +57,6 @@ func (s *storeClient) GetUserAuth(ctx context.Context, filter auth.GetUserAuthFi
 	argKV := make(map[string]interface{})
 	conditions := make([]string, 0)
 
-	conditions = append(conditions, "u.status != :status")
-	argKV["status"] = "3"
-
 	if filter.Email != "" {
 		conditions = append(conditions, "u.email = :email")
 		argKV["email"] = filter.Email
