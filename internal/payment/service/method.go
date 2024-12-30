@@ -38,7 +38,7 @@ func (s *service) CreatePayment(ctx context.Context, reqPayment payment.Payment)
 		return "", err
 	}
 
-	user.Quota = 1
+	user.Quota += 1
 	user.Type = auth.TypePending
 
 	err = s.user.UpdateUser(ctx, user)
@@ -113,10 +113,9 @@ func (s *service) UpdatePayment(ctx context.Context, reqPayment payment.Payment)
 	}
 
 	if reqPayment.Status == payment.StatusDone {
-		user.Quota = 3
+		user.Quota += 3
 		user.Type = auth.TypePemium
-	} else if reqPayment.Status == payment.StatusRejected {
-		user.Quota = 0
+	} else if reqPayment.Status == payment.StatusRejected && user.Quota == 0 {
 		user.Type = auth.TypeFree
 	}
 
