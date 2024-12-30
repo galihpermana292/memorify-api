@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"hbdtoyou/internal/auth"
 	"hbdtoyou/internal/content"
 	"hbdtoyou/internal/template"
@@ -18,20 +17,14 @@ func (s *service) CreateContent(ctx context.Context, reqContent content.Content)
 	if err != nil {
 		return "", err
 	}
-	fmt.Println("test 1")
 
 	currentTemplate, err := s.template.GetTemplateByID(ctx, reqContent.TemplateID)
 	if err != nil {
 		return "", err
 	}
 
-	fmt.Println("test 2", err)
-	
 	if currentTemplate.Label == template.LabelPremium {
-		fmt.Println("test 2", reqContent)
-		fmt.Println("test 2 uid", reqContent.UserID)
 		user, err := s.user.GetUserByID(ctx, reqContent.UserID)
-		fmt.Println("test 3", err)
 		if err != nil {
 			return "", err
 		}

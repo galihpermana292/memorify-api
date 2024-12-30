@@ -28,7 +28,6 @@ var (
 	// not found.
 	errDataNotFound = errors.New("DATA_NOT_FOUND")
 
-
 	// errInvalidToken is returned when the given token is
 	// invalid.
 	errInvalidToken = errors.New("INVALID_TOKEN")
@@ -52,6 +51,10 @@ var (
 	// errInvalidPaymentStatus is returned when the given payment status is
 	// invalid.
 	errInvalidPaymentStatus = errors.New("INVALID_PAYMENT_STATUS")
+
+	// errInvalidContentID is returned when the given content ID is
+	// invalid.
+	errInvalidContentID = errors.New("INVALID_CONTENT_ID")
 
 	// errInvalidUsername is returned when the given username
 	// is invalid.
@@ -92,5 +95,6 @@ var (
 		payment.ErrInvalidPaymentDate:     errInvalidPaymentDate,
 		payment.ErrInvalidProofPaymentURL: errInvalidProofPaymentURL,
 		payment.ErrInvalidPaymentStatus:   errInvalidPaymentStatus,
+		payment.ErrInvalidContentID:       errInvalidContentID,
 	}
 )

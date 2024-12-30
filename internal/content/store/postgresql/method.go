@@ -11,6 +11,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
+	"github.com/lib/pq"
 )
 
 func (sc *storeClient) CreateContent(ctx context.Context, reqContent content.Content) (string, error) {
@@ -42,6 +43,16 @@ func (sc *storeClient) CreateContent(ctx context.Context, reqContent content.Con
 	var contentID string
 	err = sc.q.QueryRowx(query, args...).Scan(&contentID)
 	if err != nil {
+		if pqErr, ok := err.(*pq.Error); ok && pqErr != nil {
+			if pqErr.Code.Name() == "foreign_key_violation" {
+				if pqErr.Constraint == "content_template_id_fkey" {
+					return "", content.ErrInvalidTemplateID
+				}
+				if pqErr.Constraint == "content_user_id_fkey" {
+					return "", content.ErrInvalidUserID
+				}
+			}
+		}
 		return "", err
 	}
 

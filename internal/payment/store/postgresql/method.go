@@ -8,6 +8,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
+	"github.com/lib/pq"
 )
 
 func (sc *storeClient) CreatePayment(ctx context.Context, reqPayment payment.Payment) (string, error) {
@@ -41,6 +42,16 @@ func (sc *storeClient) CreatePayment(ctx context.Context, reqPayment payment.Pay
 	var paymentID string
 	err = sc.q.QueryRowx(query, args...).Scan(&paymentID)
 	if err != nil {
+		if pqErr, ok := err.(*pq.Error); ok && pqErr != nil {
+			if pqErr.Code.Name() == "foreign_key_violation" {
+				if pqErr.Constraint == "payment_content_id_fkey" {
+					return "", payment.ErrInvalidContentID
+				}
+				if pqErr.Constraint == "payment_user_id_fkey" {
+					return "", payment.ErrInvalidUserID
+				}
+			}
+		}
 		return "", err
 	}
 

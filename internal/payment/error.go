@@ -19,6 +19,10 @@ var (
 	// invalid.
 	ErrInvalidPaymentID = errors.New("invalid payment id")
 
+	// ErrInvalidContentID is returned when the given content ID is
+	// invalid.
+	ErrInvalidContentID = errors.New("invalid content id")
+
 	// ErrInvalidPaymentStatus is returned when the given payment status is
 	// invalid.
 	ErrInvalidPaymentStatus = errors.New("invalid payment status")
