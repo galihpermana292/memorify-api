@@ -32,9 +32,6 @@ const (
 			u.fullname as user_name,
 			u.type as user_type,
 			u.quota as user_quota,
-			c.template_id,
-			t.label as template_label,
-			t.name as template_name,
 			p.proof_payment_url,
 			p.date,
 			p.status,
@@ -46,14 +43,6 @@ const (
 			user_info u
 		ON
 			u.id = p.user_id
-		LEFT JOIN
-			content c
-		ON
-			c.id = p.content_id
-		LEFT JOIN
-			template t
-		ON
-			t.id = c.template_id
 		%s
 	`
 

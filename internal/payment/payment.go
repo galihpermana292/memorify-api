@@ -3,7 +3,6 @@ package payment
 import (
 	"context"
 	"hbdtoyou/internal/auth"
-	"hbdtoyou/internal/template"
 	"time"
 )
 
@@ -41,12 +40,9 @@ type Payment struct {
 	UpdateTime      time.Time
 
 	// derived attributes
-	UserName      string
-	UserType      auth.Type
-	UserQuota     int
-	TemplateID    string
-	TemplateName  string
-	TemplateLabel template.Label
+	UserName  string
+	UserType  auth.Type
+	UserQuota int
 }
 
 // Status denotes status of a payment.

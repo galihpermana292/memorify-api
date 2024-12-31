@@ -3,7 +3,6 @@ package postgresql
 import (
 	"hbdtoyou/internal/auth"
 	"hbdtoyou/internal/payment"
-	"hbdtoyou/internal/template"
 	"time"
 )
 
@@ -15,9 +14,6 @@ type paymentModel struct {
 	UserName        string         `db:"user_name"`
 	UserType        auth.Type      `db:"user_type"`
 	UserQuota       int            `db:"user_quota"`
-	TemplateID      string         `db:"template_id"`
-	TemplateName    string         `db:"template_name"`
-	TemplateLabel   template.Label `db:"template_label"`
 	Status          payment.Status `db:"status"`
 	CreateTime      time.Time      `db:"create_time"`
 	UpdateTime      *time.Time     `db:"update_time"`
@@ -31,9 +27,6 @@ func (dbData *paymentModel) format() payment.Payment {
 		UserName:        dbData.UserName,
 		UserType:        dbData.UserType,
 		UserQuota:       dbData.UserQuota,
-		TemplateID:      dbData.TemplateID,
-		TemplateName:    dbData.TemplateName,
-		TemplateLabel:   dbData.TemplateLabel,
 		ProofPaymentURL: dbData.ProofPaymentURL,
 		Date:            dbData.Date,
 		Status:          dbData.Status,

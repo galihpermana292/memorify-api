@@ -15,9 +15,6 @@ type paymentHTTP struct {
 	UserName        *string `json:"user_name"`
 	UserType        *string `json:"user_type"`
 	UserQuota       *int    `json:"user_quota"`
-	TemplateID      *string `json:"template_id"`
-	TemplateName    *string `json:"template_name"`
-	TemplateLabel   *string `json:"template_label"`
 	ProofPaymentURL *string `json:"proof_payment_url"`
 	Date            *string `json:"date"`
 	Status          *string `json:"status"`
@@ -26,7 +23,6 @@ type paymentHTTP struct {
 func formatPayment(p payment.Payment) paymentHTTP {
 	status := p.Status.String()
 	userType := p.UserType.String()
-	templateLabel := p.TemplateLabel.String()
 	loc, _ := time.LoadLocation("Asia/Jakarta")
 
 	date := p.Date.In(loc).Format(timeFormat)
@@ -37,9 +33,6 @@ func formatPayment(p payment.Payment) paymentHTTP {
 		UserName:        &p.UserName,
 		UserType:        &userType,
 		UserQuota:       &p.UserQuota,
-		TemplateID:      &p.TemplateID,
-		TemplateName:    &p.TemplateName,
-		TemplateLabel:   &templateLabel,
 		ProofPaymentURL: &p.ProofPaymentURL,
 		Date:            &date,
 		Status:          &status,
