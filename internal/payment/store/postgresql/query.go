@@ -7,8 +7,6 @@ const (
 			(
 				id,
 				user_id,
-				content_id,
-				amount,
 				proof_payment_url,
 				date,
 				status,
@@ -18,8 +16,6 @@ const (
 			(
 				:id,
 				:user_id,
-				:content_id,
-				:amount,
 				:proof_payment_url,
 				:date,
 				:status,
@@ -36,11 +32,9 @@ const (
 			u.fullname as user_name,
 			u.type as user_type,
 			u.quota as user_quota,
-			p.content_id,
 			c.template_id,
 			t.label as template_label,
 			t.name as template_name,
-			p.amount,
 			p.proof_payment_url,
 			p.date,
 			p.status,
@@ -68,8 +62,6 @@ const (
 			payment
 		SET
 			user_id = :user_id,
-			content_id = :content_id,
-			amount = :amount,
 			proof_payment_url = :proof_payment_url,
 			date = :date,
 			status = :status,

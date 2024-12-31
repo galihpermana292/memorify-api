@@ -10,8 +10,6 @@ import (
 type paymentModel struct {
 	ID              string         `db:"id"`
 	UserID          string         `db:"user_id"`
-	ContentID       string         `db:"content_id"`
-	Amount          int            `db:"amount"`
 	ProofPaymentURL string         `db:"proof_payment_url"`
 	Date            time.Time      `db:"date"`
 	UserName        string         `db:"user_name"`
@@ -36,8 +34,6 @@ func (dbData *paymentModel) format() payment.Payment {
 		TemplateID:      dbData.TemplateID,
 		TemplateName:    dbData.TemplateName,
 		TemplateLabel:   dbData.TemplateLabel,
-		ContentID:       dbData.ContentID,
-		Amount:          dbData.Amount,
 		ProofPaymentURL: dbData.ProofPaymentURL,
 		Date:            dbData.Date,
 		Status:          dbData.Status,

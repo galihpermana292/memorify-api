@@ -19,8 +19,6 @@ func (sc *storeClient) CreatePayment(ctx context.Context, reqPayment payment.Pay
 	argKV := map[string]interface{}{
 		"id":                id,
 		"user_id":           reqPayment.UserID,
-		"content_id":        reqPayment.ContentID,
-		"amount":            reqPayment.Amount,
 		"proof_payment_url": reqPayment.ProofPaymentURL,
 		"date":              reqPayment.Date,
 		"status":            reqPayment.Status,
@@ -150,8 +148,6 @@ func (sc *storeClient) UpdatePayment(ctx context.Context, reqPayment payment.Pay
 	argsKV := map[string]interface{}{
 		"id":                reqPayment.ID,
 		"user_id":           reqPayment.UserID,
-		"content_id":        reqPayment.ContentID,
-		"amount":            reqPayment.Amount,
 		"proof_payment_url": reqPayment.ProofPaymentURL,
 		"date":              reqPayment.Date,
 		"status":            reqPayment.Status,

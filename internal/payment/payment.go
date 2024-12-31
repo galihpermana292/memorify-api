@@ -34,8 +34,6 @@ type Service interface {
 type Payment struct {
 	ID              string
 	UserID          string
-	ContentID       string
-	Amount          int
 	ProofPaymentURL string
 	Date            time.Time
 	Status          Status

@@ -18,8 +18,6 @@ type paymentHTTP struct {
 	TemplateID      *string `json:"template_id"`
 	TemplateName    *string `json:"template_name"`
 	TemplateLabel   *string `json:"template_label"`
-	ContentID       *string `json:"content_id"`
-	Amount          *int    `json:"amount"`
 	ProofPaymentURL *string `json:"proof_payment_url"`
 	Date            *string `json:"date"`
 	Status          *string `json:"status"`
@@ -42,8 +40,6 @@ func formatPayment(p payment.Payment) paymentHTTP {
 		TemplateID:      &p.TemplateID,
 		TemplateName:    &p.TemplateName,
 		TemplateLabel:   &templateLabel,
-		ContentID:       &p.ContentID,
-		Amount:          &p.Amount,
 		ProofPaymentURL: &p.ProofPaymentURL,
 		Date:            &date,
 		Status:          &status,
@@ -59,14 +55,6 @@ func (p paymentHTTP) parsePayment(out *payment.Payment) error {
 
 	if p.UserID != nil {
 		out.UserID = *p.UserID
-	}
-
-	if p.ContentID != nil {
-		out.ContentID = *p.ContentID
-	}
-
-	if p.Amount != nil {
-		out.Amount = *p.Amount
 	}
 
 	if p.ProofPaymentURL != nil {
