@@ -23,9 +23,9 @@ type paymentHTTP struct {
 func formatPayment(p payment.Payment) paymentHTTP {
 	status := p.Status.String()
 	userType := p.UserType.String()
-	loc, _ := time.LoadLocation("Asia/Jakarta")
+	// loc, _ := time.LoadLocation("Asia/Jakarta")
 
-	date := p.Date.In(loc).Format(timeFormat)
+	date := p.Date.Format(timeFormat)
 
 	res := paymentHTTP{
 		ID:              &p.ID,
