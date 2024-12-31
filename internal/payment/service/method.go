@@ -11,9 +11,6 @@ func (s *service) CreatePayment(ctx context.Context, reqPayment payment.Payment)
 	if reqPayment.ProofPaymentURL == "" {
 		return "", payment.ErrInvalidProofPaymentURL
 	}
-	if reqPayment.Amount <= 0 {
-		return "", payment.ErrInvalidAmount
-	}
 
 	// update fields
 	reqPayment.CreateTime = s.timeNow()
