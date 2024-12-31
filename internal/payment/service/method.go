@@ -14,9 +14,6 @@ func (s *service) CreatePayment(ctx context.Context, reqPayment payment.Payment)
 	if reqPayment.Amount <= 0 {
 		return "", payment.ErrInvalidAmount
 	}
-	if reqPayment.ContentID == "" {
-		return "", payment.ErrInvalidContentID
-	}
 
 	// update fields
 	reqPayment.CreateTime = s.timeNow()
