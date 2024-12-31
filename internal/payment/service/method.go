@@ -109,7 +109,7 @@ func (s *service) UpdatePayment(ctx context.Context, reqPayment payment.Payment)
 	}
 
 	if reqPayment.Status == payment.StatusDone {
-		user.Quota += 3
+		user.Quota += 5
 		user.Type = auth.TypePemium
 	} else if reqPayment.Status == payment.StatusRejected && user.Quota == 0 {
 		user.Type = auth.TypeFree
