@@ -243,7 +243,16 @@ func new(opt Option) (*server, error) {
 			return nil, fmt.Errorf("failed to initialize payment postgresql store: %s", err.Error())
 		}
 
-		paymentSvc, err = paymentservice.New(pgStore, authSvc, contentSvc)
+		svcOptions := []paymentservice.Option{}
+		svcOptions = append(svcOptions, paymentservice.WithConfig(paymentservice.Config{
+			SMTPEmail:    s.config.Payment.EmailSMTP,
+			SMTPHost:     s.config.Payment.HostSMTP,
+			SMTPPort:     s.config.Payment.PortSMTP,
+			SMTPSender:   s.config.Payment.SenderNameSMTP,
+			SMTPPassword: s.config.Payment.PasswordSMTP,
+		}))
+
+		paymentSvc, err = paymentservice.New(pgStore, authSvc, contentSvc, svcOptions...)
 		if err != nil {
 			log.Printf("[payment-api-http] failed to initialize payment service: %s\n", err.Error())
 			return nil, fmt.Errorf("failed to initialize payment service: %s", err.Error())

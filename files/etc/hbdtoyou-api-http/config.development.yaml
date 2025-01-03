@@ -46,6 +46,11 @@ template:
       timeout: 3s
 
 payment:
+  email_smtp: memoify.live@gmail.com
+  host_smtp: smtp.gmail.com
+  port_smtp: 587
+  sender_name_smtp: Admin Memoify <memoify.live@gmail.com>
+  password_smtp: bmnbynrzxoiohxlt
   http:
     "CreatePayment":
       timeout: 3s

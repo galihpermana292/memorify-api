@@ -4,6 +4,7 @@ import (
 	"context"
 	"hbdtoyou/internal/auth"
 	"hbdtoyou/internal/payment"
+	"log"
 )
 
 func (s *service) CreatePayment(ctx context.Context, reqPayment payment.Payment) (string, error) {
@@ -34,8 +35,20 @@ func (s *service) CreatePayment(ctx context.Context, reqPayment payment.Payment)
 		return "", err
 	}
 
-	user.Quota += 1
-	user.Type = auth.TypePending
+	if user.Type == auth.TypePending {
+		user.Quota = 1
+		user.Type = auth.TypePending
+	} else {
+		user.Quota += 1
+		user.Type = auth.TypePending
+	}
+
+	go func() {
+		err = s.mail.SendEmailPaymentNotification(s.config.SMTPSender, "Memoify Live Payment Notification", paymentID, user.Fullname)
+		if err != nil {
+			log.Println("error send email", err)
+		}
+	}()
 
 	err = s.user.UpdateUser(ctx, user)
 	if err != nil {
