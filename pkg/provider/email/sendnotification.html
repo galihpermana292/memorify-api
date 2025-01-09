@@ -3,76 +3,228 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Memoify Live Payment Notification</title>
-    <style>
-      .notification {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background-color: #e7f7e7;
-        border: 1px solid #4caf50;
-        padding: 15px;
-        border-radius: 8px;
-        color: #4caf50;
-        font-family: Arial, sans-serif;
-        font-size: 16px;
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        animation: fadeIn 0.5s ease-out, fadeOut 0.5s ease-in 5s forwards;
-      }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(-10px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      @keyframes fadeOut {
-        from {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        to {
-          opacity: 0;
-          transform: translateY(-10px);
-        }
-      }
-
-      .notification .close-btn {
-        cursor: pointer;
-        font-weight: bold;
-        border: none;
-        background: none;
-        color: #4caf50;
-        font-size: 18px;
-      }
-
-      .notification .close-btn:hover {
-        color: #388e3c;
-      }
-    </style>
+    <title>New Pending Payment</title>
   </head>
-  <body>
-    <div class="notification" id="paymentNotification">
-      <span
-        >✔ Ada Pembayaran Baru Nich Dek! (PaymentID: {{.PaymentID}}, Username:
-        {{.Username}})</span
-      >
-      <button class="close-btn" onclick="closeNotification()">×</button>
-    </div>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    "
+  >
+    <table role="presentation" style="width: 100%; border-collapse: collapse">
+      <tr>
+        <td
+          style="padding: 20px 0; text-align: center; background-color: #ffffff"
+        >
+          <table
+            role="presentation"
+            style="
+              width: 600px;
+              margin: 0 auto;
+              background-color: #ffffff;
+              border-radius: 8px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            "
+          >
+            <!-- Header -->
+            <tr>
+              <td
+                style="
+                  padding: 40px 30px;
+                  text-align: center;
+                  background-color: #ff9800;
+                  border-radius: 8px 8px 0 0;
+                "
+              >
+                <h1 style="color: #ffffff; margin: 0; font-size: 24px">
+                  New Pending Payment
+                </h1>
+              </td>
+            </tr>
 
-    <script>
-      function closeNotification() {
-        const notification = document.getElementById("paymentNotification");
-        notification.style.display = "none";
-      }
-    </script>
+            <!-- Content -->
+            <tr>
+              <td style="padding: 40px 30px">
+                <p
+                  style="
+                    margin: 0 0 20px;
+                    font-size: 16px;
+                    line-height: 1.5;
+                    color: #333333;
+                  "
+                >
+                  Dear Admin,
+                </p>
+                <p
+                  style="
+                    margin: 0 0 20px;
+                    font-size: 16px;
+                    line-height: 1.5;
+                    color: #333333;
+                  "
+                >
+                  A new payment is pending for your review. Please verify and
+                  process this payment at your earliest convenience.
+                </p>
+                <p
+                  style="
+                    margin: 0 0 20px;
+                    font-size: 16px;
+                    line-height: 1.5;
+                    color: #333333;
+                  "
+                >
+                  Payment details:
+                </p>
+                <table
+                  style="
+                    width: 100%;
+                    margin-bottom: 20px;
+                    border-collapse: collapse;
+                  "
+                >
+                  <tr>
+                    <td
+                      style="
+                        padding: 10px;
+                        background-color: #f8f8f8;
+                        border: 1px solid #dddddd;
+                      "
+                    >
+                      Customer Name:
+                    </td>
+                    <td style="padding: 10px; border: 1px solid #dddddd">
+                      {{.Username}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      style="
+                        padding: 10px;
+                        background-color: #f8f8f8;
+                        border: 1px solid #dddddd;
+                      "
+                    >
+                      Customer Email:
+                    </td>
+                    <td style="padding: 10px; border: 1px solid #dddddd">
+                      {{.UserEmail}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      style="
+                        padding: 10px;
+                        background-color: #f8f8f8;
+                        border: 1px solid #dddddd;
+                      "
+                    >
+                      Transaction ID:
+                    </td>
+                    <td style="padding: 10px; border: 1px solid #dddddd">
+                      {{.PaymentID}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      style="
+                        padding: 10px;
+                        background-color: #f8f8f8;
+                        border: 1px solid #dddddd;
+                      "
+                    >
+                      Date Submitted:
+                    </td>
+                    <td style="padding: 10px; border: 1px solid #dddddd">
+                      {{.Date}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      style="
+                        padding: 10px;
+                        background-color: #f8f8f8;
+                        border: 1px solid #dddddd;
+                      "
+                    >
+                      Status:
+                    </td>
+                    <td
+                      style="
+                        padding: 10px;
+                        border: 1px solid #dddddd;
+                        color: #ff9800;
+                        font-weight: bold;
+                      "
+                    >
+                      Pending Review
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- Action Button -->
+                <table
+                  role="presentation"
+                  style="width: 100%; border-collapse: collapse; margin: 30px 0"
+                >
+                  <tr>
+                    <td style="text-align: center">
+                      <a
+                        href="{{.PaymentProof}}"
+                        style="
+                          background-color: #4caf50;
+                          color: #ffffff;
+                          padding: 12px 30px;
+                          text-decoration: none;
+                          border-radius: 4px;
+                          display: inline-block;
+                          font-weight: bold;
+                        "
+                      >
+                        Review Payment
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+
+                <p
+                  style="
+                    margin: 0 0 20px;
+                    font-size: 16px;
+                    line-height: 1.5;
+                    color: #333333;
+                  "
+                >
+                  Please log in to the admin dashboard to review and process
+                  this payment. Quick action helps maintain good customer
+                  service.
+                </p>
+              </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+              <td
+                style="
+                  padding: 30px;
+                  text-align: center;
+                  background-color: #f8f8f8;
+                  border-radius: 0 0 8px 8px;
+                "
+              >
+                <p style="margin: 0; font-size: 14px; color: #666666">
+                  This is an automated notification from the payment system.
+                </p>
+                <p style="margin: 10px 0 0; font-size: 14px; color: #666666">
+                  © 2025 Memoify. All rights reserved.
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
   </body>
 </html>

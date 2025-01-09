@@ -13,6 +13,8 @@ var (
 	errMissingMandatoryConfig = errors.New("missing mandatory config")
 )
 
+var timeFormat = "Monday, 02 Jan 2006 at 15:04"
+
 // service implements subject.Service.
 type service struct {
 	pgStore PGStore

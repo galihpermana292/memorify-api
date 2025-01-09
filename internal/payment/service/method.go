@@ -44,7 +44,7 @@ func (s *service) CreatePayment(ctx context.Context, reqPayment payment.Payment)
 	}
 
 	go func() {
-		err = s.mail.SendEmailPaymentNotification(s.config.SMTPSender, "Memoify Live Payment Notification", paymentID, user.Fullname)
+		err = s.mail.SendEmailPaymentNotification(s.config.SMTPSender, "Memoify Payment Notification", paymentID, user.Fullname, reqPayment.ProofPaymentURL, user.Email, reqPayment.Date.Format(timeFormat))
 		if err != nil {
 			log.Println("error send email", err)
 		}
@@ -124,6 +124,12 @@ func (s *service) UpdatePayment(ctx context.Context, reqPayment payment.Payment)
 	if reqPayment.Status == payment.StatusDone {
 		user.Quota += 5
 		user.Type = auth.TypePemium
+		go func() {
+			err = s.mail.SendPaymentSuccessfulEmail(s.config.SMTPSender, user.Email, "Memoify Payment Accepted", reqPayment.ID, user.Fullname, reqPayment.Date.Format(timeFormat))
+			if err != nil {
+				log.Println("error send email", err)
+			}
+		}()
 	} else if reqPayment.Status == payment.StatusRejected && user.Quota == 0 {
 		user.Type = auth.TypeFree
 	}
